@@ -5,9 +5,10 @@
         <h1 class="page-header">Users</h1>
     </div>
 </div>
-<div class="row" ng-show="vm.error">
+<div class="row" ng-show="vm.error || vm.success">
     <div class="col-md-12">
-        <p class="alert alert-danger">{{vm.error.message}}</p>
+        <p class="alert alert-success" ng-show="vm.success">{{vm.success.message}}</p>
+        <p class="alert alert-danger" ng-show="vm.error">{{vm.error.message}}</p>
     </div>
 </div>
 <div class="row">

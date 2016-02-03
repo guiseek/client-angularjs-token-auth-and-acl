@@ -5,9 +5,9 @@
         .module('user')
         .controller('UserController', UserController);
         
-    UserController.$inject = ['UserService','AclService'];
+    UserController.$inject = ['UserService','AclService','Storage','$rootScope'];
         
-    function UserController(UserService,AclService) {
+    function UserController(UserService,AclService,Storage,$rootScope) {
         var vm = this;
         vm.empty = {};
         vm.acl = AclService;
@@ -47,6 +47,10 @@
         vm.save = function(user) {
             if (user._id) {
                 UserService.update(user).then(function(response) {
+                    if (AclService.isMe(user._id)) {
+                        $rootScope.$emit('updateLogged', response.data.user);
+                    }
+                    vm.success = response.data;
                     vm.findAll();
                     vm.reset();
                 }, function(error) {
@@ -55,6 +59,7 @@
                 });
             } else {
                 UserService.create(user).then(function(response) {
+                    vm.success = response.data;
                     vm.findAll();
                     vm.reset();
                 }, function(error) {
@@ -66,6 +71,7 @@
         vm.remove = function(user) {
             if (confirm('You really want to remove the user ' + user.name + '?')) {
                 UserService.remove(user._id).then(function(response) {
+                    vm.success = response.data;
                     vm.findAll();
                 }, function(error) {
                     console.error(error);
