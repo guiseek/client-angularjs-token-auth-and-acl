@@ -5,22 +5,13 @@
         .module('user')
         .controller('UserController', UserController);
         
-    UserController.$inject = ['UserService','AclService','Storage','$rootScope'];
+    UserController.$inject = ['UserService','AclService','Storage','COMPONENTS','$rootScope'];
         
-    function UserController(UserService,AclService,Storage,$rootScope) {
+    function UserController(UserService,AclService,Storage,COMPONENTS,$rootScope) {
         var vm = this;
         vm.empty = {};
         vm.acl = AclService;
-        vm.user = {
-            roles: []
-        };
-        vm.findAll = function() {
-            UserService.findAll().then(function(response) {
-                vm.users = response.data;
-            }, function(error) {
-                vm.error = error.data;
-            });
-        }
+        vm.components = COMPONENTS;
         vm.roles = [
             {
                 name: 'Admin',
@@ -30,6 +21,13 @@
                 value: 'user'
             }
         ];
+        vm.findAll = function() {
+            UserService.findAll().then(function(response) {
+                vm.users = response.data;
+            }, function(error) {
+                vm.error = error.data;
+            });
+        }
         vm.toggleRoles = function(role) {
             var index = vm.user.roles.indexOf(role);
             if (index > -1) {

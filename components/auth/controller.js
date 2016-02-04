@@ -5,12 +5,13 @@
         .module('auth')
         .controller('AuthController', AuthController);
         
-    AuthController.$inject = ['AuthService','AclService','Storage','$location'];
+    AuthController.$inject = ['AuthService','AclService','Storage','COMPONENTS','$location'];
         
-    function AuthController(AuthService,AclService,Storage,$location) {
+    function AuthController(AuthService,AclService,Storage,COMPONENTS,$location) {
         var vm = this;
         vm.credentials = {};
         vm.acl = AclService;
+        vm.components = COMPONENTS;
         vm.signin = function() {
             AuthService.signin(vm.credentials).then(function(response) {
                 Storage.setObject('user',response.data.user);

@@ -1,5 +1,5 @@
 <div>
-    <link rel="stylesheet" href="components/auth/signin.css">
+    <link rel="stylesheet" href="{{ vm.components.auth + 'signin.css' }}">
     <form class="form-signin" ng-submit="vm.signin()" name="authForm" novalidate>
         <h2 class="form-signin-heading">Sign In</h2>
         <p ng-show="vm.error" class="alert alert-danger">{{vm.error}}</p>
