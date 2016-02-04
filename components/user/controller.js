@@ -5,9 +5,9 @@
         .module('user')
         .controller('UserController', UserController);
         
-    UserController.$inject = ['UserService','AclService','Storage','COMPONENTS'];
+    UserController.$inject = ['UserService','AclService','Storage','COMPONENTS','$rootScope'];
         
-    function UserController(UserService,AclService,Storage,COMPONENTS) {
+    function UserController(UserService,AclService,Storage,COMPONENTS,$rootScope) {
         var vm = this;
         vm.empty = {};
         vm.acl = AclService;
