@@ -2,15 +2,16 @@
     'use strict';
     
     angular
-        .module('app', ['ngRoute','auth','user','brewery','beer'])
+        .module('brewery')
         .config(Config);
         
     function Config($routeProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'components/app/app.html',
-                controller: 'AppController',
+            .when('/breweries', {
+                templateUrl: 'components/brewery/brewery.html',
+                controller: 'BreweryController',
                 controllerAs: 'vm'
             });
     }
+        
 })();

@@ -23,7 +23,14 @@
             }
         }
         this.isMe = function(id) {
-            if ($rootScope.logged.roles && $rootScope.logged._id == id) {
+            if ($rootScope.logged && $rootScope.logged._id == id) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        this.isMine = function(id) {
+            if ($rootScope.logged && $rootScope.logged._id == id) {
                 return true;
             } else {
                 return false;

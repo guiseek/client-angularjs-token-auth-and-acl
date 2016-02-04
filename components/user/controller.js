@@ -5,9 +5,9 @@
         .module('user')
         .controller('UserController', UserController);
         
-    UserController.$inject = ['UserService','AclService','Storage','COMPONENTS','$rootScope'];
+    UserController.$inject = ['UserService','AclService','Storage','COMPONENTS'];
         
-    function UserController(UserService,AclService,Storage,COMPONENTS,$rootScope) {
+    function UserController(UserService,AclService,Storage,COMPONENTS) {
         var vm = this;
         vm.empty = {};
         vm.acl = AclService;
@@ -21,13 +21,6 @@
                 value: 'user'
             }
         ];
-        vm.findAll = function() {
-            UserService.findAll().then(function(response) {
-                vm.users = response.data;
-            }, function(error) {
-                vm.error = error.data;
-            });
-        }
         vm.toggleRoles = function(role) {
             var index = vm.user.roles.indexOf(role);
             if (index > -1) {
@@ -41,6 +34,13 @@
         }
         vm.reset = function() {
             vm.user = angular.copy(vm.empty);
+        }
+        vm.findAll = function() {
+            UserService.findAll().then(function(response) {
+                vm.users = response.data;
+            }, function(error) {
+                vm.error = error.data;
+            });
         }
         vm.save = function(user) {
             if (user._id) {

@@ -1,0 +1,73 @@
+<ng-include src="vm.components.shared + 'header.html'"></ng-include>
+<section class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">Beers</h1>
+    </div>
+</section>
+<section class="row" ng-show="vm.error || vm.success">
+    <div class="col-md-12">
+        <p class="alert alert-success" ng-show="vm.success">{{vm.success.message}}</p>
+        <p class="alert alert-danger" ng-show="vm.error">{{vm.error.message}}</p>
+    </div>
+</section>
+<div class="row">
+    <section class="col-md-6">
+        <table class="table table-striped table-hover" ng-init="vm.findAll()">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Brewery</th>
+                    <th>User</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="beer in vm.beers">
+                    <td>{{beer.name}}</td>
+                    <td>{{beer.description}}</td>
+                    <td>{{beer.brewery.name}}</td>
+                    <td>{{beer.user.name}}</td>
+                    <td>
+                        <div class="pull-right">
+                            <button type="button" ng-click="vm.populate(beer)" ng-show="vm.acl.isMine(beer.user._id) || vm.acl.isAdmin()" class="btn btn-xs btn-default">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="button" ng-click="vm.remove(beer)" ng-show="vm.acl.isMine(beer.user._id) || vm.acl.isAdmin()" class="btn btn-xs btn-default">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="col-md-6">
+        <form ng-submit="vm.save(vm.beer)" name="beerForm" novalidate>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" ng-model="vm.beer.name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" class="form-control" ng-model="vm.beer.description" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="brewery">Brewery</label>
+                    <select class="form-control" ng-model="vm.beer.brewery" ng-options="brewery as brewery.name for brewery in vm.breweries track by brewery._id"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <button type="button" ng-click="vm.reset()" class="btn btn-warning">Reset</button>
+                        <button class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>            
+        </form>
+    </section>
+</div>
