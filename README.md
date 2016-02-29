@@ -4,9 +4,7 @@
 ## Run
 Install bower dependencies:
 ```
-bower install angular
-bower install angular-route
-bower install bootstrap
+bower install
 ```
 
 After installing bower dependencies, the start:
